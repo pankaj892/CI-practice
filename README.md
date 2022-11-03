@@ -76,10 +76,10 @@ First, let's add a workflow to lint our Markdown files in this repository.
 1. Update the workflow to remove all steps other than the "checkout" step.
 1. Add the following step to your workflow:
    ```yaml
-      - name: Run markdown lint
-        run: |
-          npm install remark-cli remark-preset-lint-consistent
-          npx remark . --use remark-preset-lint-consistent --frail
+   - name: Run markdown lint
+     run: |
+       npm install remark-cli remark-preset-lint-consistent
+       npx remark . --use remark-preset-lint-consistent --frail
    ```
    > We expect this to create a error build. We'll fix this in the next step.
 1. Click **Start commit**, and choose to make a new branch named `ci`.
@@ -152,22 +152,24 @@ To upload artifacts to the artifact storage, we can use an action built by GitHu
 
 1. Edit your workflow file.
 1. Add a step to your `build` job that uses the `upload-artifacts` action.
+
    ```yaml
-     build:
-       runs-on: ubuntu-latest
-       steps:
-         - uses: actions/checkout@v2
+   build:
+     runs-on: ubuntu-latest
+     steps:
+       - uses: actions/checkout@v2
 
-         - name: Run markdown lint
-           run: |
-             npm install remark-cli remark-preset-lint-consistent
-             npx remark . --use remark-preset-lint-consistent --frail
+       - name: Run markdown lint
+         run: |
+           npm install remark-cli remark-preset-lint-consistent
+           npx remark . --use remark-preset-lint-consistent --frail
 
-         - uses: actions/upload-artifact@main
-           with:
-             name: remark-lint-report
-             path: public/
+       - uses: actions/upload-artifact@main
+         with:
+           name: remark-lint-report
+           path: public/
    ```
+
 1. Commit your change to this branch.
 1. Wait about 20 seconds then refresh this page for the next step.
 
